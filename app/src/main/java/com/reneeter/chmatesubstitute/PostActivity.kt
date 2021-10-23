@@ -1,6 +1,5 @@
 package com.reneeter.chmatesubstitute
 
-import android.app.Activity
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -13,7 +12,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.content.edit
@@ -23,7 +21,6 @@ import com.reneeter.chmatesubstitute.databinding.ActivityPostBinding
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.IOException
 import java.net.URLEncoder
 
 class PostActivity : AppCompatActivity(R.layout.activity_post) {
@@ -104,12 +101,12 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
             }
 
             // パラメーターの設定
-            val parameters = ("FROM=" + encodeURL(binding.postName.text) +
-                    "&mail=" + encodeURL(binding.postEmail.text) +
-                    "&MESSAGE=" + encodeURL(binding.postMessage.text) +
-                    "&bbs=" + board +
-                    "&key=" + threadKey +
-                    "&time=" + (System.currentTimeMillis() / 1000).toString() +
+            val parameters = ("FROM=${encodeURL(binding.postName.text)}" +
+                    "&mail=${encodeURL(binding.postEmail.text)}" +
+                    "&MESSAGE=${encodeURL(binding.postMessage.text)}" +
+                    "&bbs=${board}" +
+                    "&key=${threadKey}" +
+                    "&time=${(System.currentTimeMillis() / 1000)}" +
                     "&submit=%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%82%80")
                 .toRequestBody("application/x-www-form-urlencoded; charset=UTF-8".toMediaType())
 
@@ -135,8 +132,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                 post(parameters)
             }.build()
 
-            val handler = Handler(Looper.getMainLooper())
-            val activity = this
+            val callback = PostCallback(board, threadKey, Handler(Looper.getMainLooper()), this)
 
             if (binding.postUseCellular.isChecked) {
                 // セルラー回線を使用
@@ -150,13 +146,13 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
 
                             // Post
                             OkHttpClient.Builder().socketFactory(network.socketFactory).build()
-                                .newCall(request).enqueue(PostCallback(handler, activity))
+                                .newCall(request).enqueue(callback)
                         }
                     }
                 )
             } else {
                 // Post
-                OkHttpClient().newCall(request).enqueue(PostCallback(handler, activity))
+                OkHttpClient().newCall(request).enqueue(callback)
             }
         }
     }
@@ -166,30 +162,6 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
 
         sharedPreferences.edit {
             putBoolean("cellularChecked", binding.postUseCellular.isChecked)
-        }
-    }
-
-    class PostCallback(private val handler: Handler, private val activity: Activity) : Callback {
-        override fun onResponse(call: Call, response: Response) {
-            handler.post {
-                Toast.makeText(
-                    activity,
-                    R.string.post_success_toast_text,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            activity.finish()
-        }
-
-        override fun onFailure(call: Call, e: IOException) {
-            handler.post {
-                Toast.makeText(
-                    activity,
-                    R.string.post_failed_toast_text,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            activity.finish()
         }
     }
 }

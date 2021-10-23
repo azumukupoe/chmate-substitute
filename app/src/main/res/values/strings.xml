@@ -4,6 +4,7 @@
 
     <!-- SettingsActivity.kt -->
     <string name="settings_title">設定</string>
+    <string name="permission_error_toast_text">権限の取得に失敗しました。</string>
     <string name="about_description">ChMateの書き込みを肩代わりするアプリ。</string>
 
     <!-- PostActivity.kt -->
@@ -26,5 +27,6 @@
     <string name="user_agent_default">Monazilla/1.00 2chMate/0.8.10.116 Dalvik/2.1.0 (Linux; U; Android 11; Pixel 4a Build/RP1A.201005.006; wv)</string>
     <string name="x_2ch_ua_title">X-2ch-UA</string>
     <string name="x_2ch_ua_default">2chMate/0.8.10.116</string>
+    <string name="get_permission_title">idxディレクトリの権限を取得</string>
     <string name="about_title">About</string>
 </resources>

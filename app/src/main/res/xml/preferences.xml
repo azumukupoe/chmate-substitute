@@ -18,6 +18,10 @@
         app:useSimpleSummaryProvider="true" />
 
     <Preference
+        android:key="get_permission"
+        android:title="@string/get_permission_title" />
+
+    <Preference
         android:key="about"
         android:title="@string/about_title" />
 </PreferenceScreen>
