@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <CheckBoxPreference
+        android:key="use_cellular"
+        android:title="@string/use_cellular_title" />
+
+    <EditTextPreference
+        android:defaultValue="@string/user_agent_default"
+        android:key="user_agent"
+        android:title="@string/user_agent_title"
+        app:useSimpleSummaryProvider="true" />
+
+    <EditTextPreference
+        android:defaultValue="@string/x_2ch_ua_default"
+        android:key="x_2ch_ua"
+        android:title="@string/x_2ch_ua_title"
+        app:useSimpleSummaryProvider="true" />
+
+    <Preference
+        android:key="about"
+        android:title="@string/about_title" />
+</PreferenceScreen>

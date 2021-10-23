@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/origin_quote"
+        android:icon="@drawable/ic_baseline_format_quote_24"
+        android:title="@string/origin_quote_title" />
+</menu>
