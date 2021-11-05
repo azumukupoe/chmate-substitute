@@ -47,12 +47,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:host="*.5ch.net" />
-                <data android:host="*.bbspink.com" />
                 <data
+                    android:host="example.com"
                     android:mimeType="text/html"
-                    android:pathPattern="/test/read.cgi/.*/.*/l5"
-                    android:scheme="https" />
+                    android:path="/"
+                    android:scheme="http" />
             </intent-filter>
 
             <intent-filter>
@@ -61,11 +60,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+                <data android:host="*.5ch.net" />
+                <data android:host="*.bbspink.com" />
                 <data
-                    android:host="example.com"
                     android:mimeType="text/html"
-                    android:path="/"
-                    android:scheme="http" />
+                    android:pathPattern="/test/read.cgi/.*/.*/l5"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
     </application>

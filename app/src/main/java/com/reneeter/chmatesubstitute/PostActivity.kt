@@ -1,6 +1,7 @@
 package com.reneeter.chmatesubstitute
 
 import android.app.Activity
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -14,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.content.edit
@@ -46,6 +48,12 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
         binding.postMessage.setText(anchor)
 
         var actionMode: ActionMode? = null
+        val mushroomLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    binding.postMessage.append(result.data?.getStringExtra("replace_key"))
+                }
+            }
         binding.postMessage.setOnLongClickListener {
             if (actionMode == null) {
                 actionMode = startSupportActionMode(object : ActionMode.Callback {
@@ -63,12 +71,22 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                     }
 
                     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-                        return if (item!!.itemId == R.id.origin_quote) {
-                            binding.postMessage.append(originRes)
-                            mode!!.finish()
-                            true
-                        } else {
-                            false
+                        return when (item?.itemId) {
+                            R.id.origin_quote -> {
+                                binding.postMessage.append(originRes)
+                                mode?.finish()
+                                true
+                            }
+                            R.id.mushroom -> {
+                                mushroomLauncher.launch(
+                                    Intent("com.adamrocker.android.simeji.ACTION_INTERCEPT")
+                                        .addCategory("com.adamrocker.android.simeji.REPLACE")
+                                        .putExtra("replace_key", "")
+                                )
+                                mode?.finish()
+                                true
+                            }
+                            else -> false
                         }
                     }
 
@@ -104,12 +122,12 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
             }
 
             // パラメーターの設定
-            val parameters = ("FROM=" + encodeURL(binding.postName.text) +
-                    "&mail=" + encodeURL(binding.postEmail.text) +
-                    "&MESSAGE=" + encodeURL(binding.postMessage.text) +
-                    "&bbs=" + board +
-                    "&key=" + threadKey +
-                    "&time=" + (System.currentTimeMillis() / 1000).toString() +
+            val parameters = ("FROM=${encodeURL(binding.postName.text)}" +
+                    "&mail=${encodeURL(binding.postEmail.text)}" +
+                    "&MESSAGE=${encodeURL(binding.postMessage.text)}" +
+                    "&bbs=${board}" +
+                    "&key=${threadKey}" +
+                    "&time=${(System.currentTimeMillis() / 1000)}" +
                     "&submit=%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%82%80")
                 .toRequestBody("application/x-www-form-urlencoded; charset=UTF-8".toMediaType())
 

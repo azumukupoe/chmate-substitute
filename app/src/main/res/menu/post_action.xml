@@ -4,4 +4,9 @@
         android:id="@+id/origin_quote"
         android:icon="@drawable/ic_baseline_format_quote_24"
         android:title="@string/origin_quote_title" />
+
+    <item
+        android:id="@+id/mushroom"
+        android:icon="@drawable/ic_baseline_text_increase_24"
+        android:title="@string/mushroom_title" />
 </menu>

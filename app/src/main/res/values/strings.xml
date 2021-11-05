@@ -19,12 +19,13 @@
 
     <!-- menu/post_action.xml -->
     <string name="origin_quote_title">元レスを引用</string>
+    <string name="mushroom_title">マッシュルーム</string>
 
     <!-- xml/preferences.xml -->
     <string name="use_cellular_title">「モバイルネットワークを使用」を表示</string>
     <string name="user_agent_title">User-Agent</string>
-    <string name="user_agent_default">Monazilla/1.00 2chMate/0.8.10.116 Dalvik/2.1.0 (Linux; U; Android 11; Pixel 4a Build/RP1A.201005.006; wv)</string>
+    <string name="user_agent_default">Monazilla/1.00 2chMate/0.8.10.118 Dalvik/2.1.0 (Linux; U; Android 11; Pixel 4a Build/RP1A.201005.006; wv)</string>
     <string name="x_2ch_ua_title">X-2ch-UA</string>
-    <string name="x_2ch_ua_default">2chMate/0.8.10.116</string>
+    <string name="x_2ch_ua_default">2chMate/0.8.10.118</string>
     <string name="about_title">About</string>
 </resources>
